@@ -1,51 +1,48 @@
-//Напишите программу, находящую все простые числа Ченя не превосходящие n. Программа должна работать не более чем за O(n*log log n) шагов.
+/*Напишите эффективную процедуру, выписывающую из массива длины n все элементы, у которых 
+произведение ненулевых цифр больше k.*/
 
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-int main()
+bool check(int n, int k)
 {
-    vector <int> a(1);
-    a[0] = 2;
-    int i = 0;
-    int n;
-    cin >> n;
-    if (n >= 2) 
+    int m = n;
+    int r = 1;
+    int d;
+    while (m > 0)
     {
-        cout << 2 << " ";
-    }
-    for (int j = 3; j <= n + 2; j += 2)
-    {
-        int j1 = j;
-        bool f = 0;
-        int g = 3;
-        for (int k = 0; k < a.size() && g > 0; k++)
+        d = m % 10;
+        if (d > 0)
         {
-            if (j1 % a[k] == 0)
+            r *= d;
+            if (r > k)
             {
-                if (!f)
-                {
-                    f = 1;
-                }
-                g--;
-                j1 /= a[k];
-                k--;
+                cout << n << " ";
+                return 1;
             }
+            
         }
-        if (g > 0)
-        {
-            if (a[a.size() - 1] == j - 2)
-            {
-                cout << a[a.size() - 1] << " ";
-            }
-            if (!f)
-            {
-                a.resize(a.size() + 1);
-                a[a.size() - 1] = j;
-            }
-        }
+        m /= 10;
     }
     return 0;
 }
+
+int main()
+{
+    int n;
+    int k;
+    cin >> n >> k;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    for (int i = 0; i < n; i++)
+    {
+        check(a[i], k);
+    }
+    return 0;
+}
+// если цифры числа уже дают в произведении число, большее k, то дальше программа не проверяет 
